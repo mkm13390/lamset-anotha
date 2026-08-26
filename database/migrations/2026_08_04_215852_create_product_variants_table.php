@@ -15,22 +15,24 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->string('sku')->unique();
+
             $table->string('color_name_ar')->nullable();
             $table->string('color_name_en')->nullable();
             $table->string('color_code')->nullable();
 
             $table->string('size')->nullable();
-            $table->string('sku')->nullable()->unique();
 
-            $table->unsignedInteger('stock_quantity')->default(0);
             $table->decimal('price', 10, 3)->nullable();
 
-            $table->string('image')->nullable();
+            $table->unsignedInteger('stock_quantity')->default(0);
 
             $table->boolean('is_active')->default(true);
-            $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
+
+            $table->index('product_id');
+            $table->index('is_active');
         });
     }
 
