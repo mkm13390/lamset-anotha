@@ -18,9 +18,13 @@ html[data-theme="dark"] .hero-box{background:linear-gradient(135deg,#25211f,#1d1
 .section{padding:34px 0}
 .section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:18px}
 .section-head h2{margin:0;font-size:28px}.section-head p{margin:4px 0 0;color:var(--sf-muted)}
-.category-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .category-card{background:var(--sf-surface);border:1px solid var(--sf-border);border-radius:18px;padding:22px 14px;text-align:center;min-height:118px;display:flex;flex-direction:column;justify-content:center;gap:8px}
 .category-card span{font-size:30px}.category-card small{color:var(--sf-muted)}
+.category-card--wide{min-height:260px;padding:34px 22px;gap:12px}
+.category-card--wide span{font-size:74px}
+.category-card--wide strong{font-size:24px}
+.category-card--wide em{font-style:normal;margin-top:6px;align-self:center;padding:11px 26px;border-radius:14px;background:var(--sf-primary);color:var(--sf-primary-text);font-weight:700}
 .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .product-card{background:var(--sf-surface);border:1px solid var(--sf-border);border-radius:18px;overflow:hidden}
 .product-image{aspect-ratio:1/1;background:var(--sf-surface-2);display:grid;place-items:center;overflow:hidden}
@@ -32,8 +36,8 @@ html[data-theme="dark"] .hero-box{background:linear-gradient(135deg,#25211f,#1d1
 .value-card{padding:22px;border:1px solid var(--sf-border);background:var(--sf-surface);border-radius:18px}.value-card strong{display:block;margin-bottom:5px}.value-card p{color:var(--sf-muted);margin:0;font-size:13px}
 .gift-box{padding:34px;border-radius:24px;background:var(--sf-primary);color:var(--sf-primary-text);display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px}
 .gift-box h2{margin:0 0 7px}.gift-box p{margin:0;opacity:.78}.gift-box .sf-button{background:var(--sf-primary-text);color:var(--sf-primary)}
-@media(max-width:980px){.hero-box{grid-template-columns:1fr}.hero-visual{min-height:220px}.category-grid{grid-template-columns:repeat(3,1fr)}.product-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:620px){.home-hero{padding-top:20px}.hero-copy{padding:30px 22px}.hero-visual{display:none}.category-grid{grid-template-columns:repeat(2,1fr)}.product-grid{grid-template-columns:repeat(2,1fr);gap:10px}.value-grid{grid-template-columns:1fr}.gift-box{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.product-body{padding:10px}}
+@media(max-width:980px){.hero-box{grid-template-columns:1fr}.hero-visual{min-height:220px}.product-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.home-hero{padding-top:20px}.hero-copy{padding:30px 22px}.hero-visual{display:none}.category-grid{grid-template-columns:1fr}.category-card--wide{min-height:190px;padding:22px 14px;gap:8px}.category-card--wide span{font-size:52px}.category-card--wide strong{font-size:18px}.category-card--wide em{padding:9px 18px;font-size:13px}.product-grid{grid-template-columns:repeat(2,1fr);gap:10px}.value-grid{grid-template-columns:1fr}.gift-box{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.product-body{padding:10px}}
 </style>
 @endpush
 
@@ -67,21 +71,15 @@ html[data-theme="dark"] .hero-box{background:linear-gradient(135deg,#25211f,#1d1
 @if($categories->isNotEmpty())
 <section class="section">
     <div class="sf-container">
-        <div class="section-head">
-            <div>
-                <h2 data-i18n-ar="تسوقي حسب القسم" data-i18n-en="Shop by category">تسوقي حسب القسم</h2>
-                <p data-i18n-ar="وصول أسرع لما تبحثين عنه." data-i18n-en="A faster way to find what you want.">وصول أسرع لما تبحثين عنه.</p>
-            </div>
-        </div>
-
         <div class="category-grid">
             @foreach($categories as $category)
-                <a class="category-card" href="{{ route('products.index', ['category' => $category->id]) }}">
-                    <span>◇</span>
+                <a class="category-card category-card--wide" href="{{ route('products.index', ['category' => $category->id]) }}">
+                    <span>{{ $category->icon ?? '◇' }}</span>
                     <strong>{{ $category->name_ar ?? 'قسم' }}</strong>
                     @if(!empty($category->name_en))
                         <small>{{ $category->name_en }}</small>
                     @endif
+                    <em data-i18n-ar="تسوقي الآن" data-i18n-en="Shop now">تسوقي الآن</em>
                 </a>
             @endforeach
         </div>
